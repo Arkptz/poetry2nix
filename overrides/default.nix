@@ -218,7 +218,7 @@ lib.composeManyExtensions [
             nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.pytest-runner ];
           }
         );
-
+        alembic = bootstrappingBase.alembic;
         ansible = prev.ansible.overridePythonAttrs (
           old: {
             # Inputs copied from nixpkgs as ansible doesn't specify it's dependencies
@@ -1679,9 +1679,15 @@ lib.composeManyExtensions [
           }
         );
 
-        markupsafe = prev.markupsafe.overridePythonAttrs (
+        markupsafe = bootstrappingBase.markupsafe.overridePythonAttrs (
           old: {
             src = old.src.override { pname = builtins.replaceStrings [ "markupsafe" ] [ "MarkupSafe" ] old.pname; };
+            preFixup = ''
+              find $out -name 'RECORD' -delete
+              find  $out -type d -name '__pycache__' -exec rm -r {} +
+              find  $out -name '*.pyc' -delete
+              find  $out -name '*.*.pyc' -delete
+            '';
           }
         );
 
@@ -2492,7 +2498,7 @@ lib.composeManyExtensions [
         pydantic-core = prev.pydantic-core.override {
           preferWheel = true;
         };
-
+        pydantic-settings = bootstrappingBase.pydantic-settings;
         py-solc-x = prev.py-solc-x.overridePythonAttrs (
           old: {
             preConfigure = ''
