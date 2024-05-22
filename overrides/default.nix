@@ -200,7 +200,7 @@ lib.composeManyExtensions [
         #### END bootstrapping pkgs
 
         poetry = final.poetry-core;
-
+        aiosqlite = bootstrappingBase.aiosqlite;
         automat = prev.automat.overridePythonAttrs (
           old:
           lib.optionalAttrs (lib.versionOlder old.version "22.10.0") {
@@ -1244,6 +1244,7 @@ lib.composeManyExtensions [
         httplib2 = prev.httplib2.overridePythonAttrs (old: {
           propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ [ final.pyparsing ];
         });
+        httpx = bootstrappingBase.httpx;
         humps = prev.humps.overridePythonAttrs (old: {
           nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.setuptools ];
         });
@@ -4095,6 +4096,7 @@ lib.composeManyExtensions [
               ];
           }
         );
+        virtualenv = bootstrappingBase.virtualenv;
 
         watchfiles =
           let
