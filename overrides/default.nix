@@ -2831,8 +2831,8 @@ in
              from PIL import Image
 
 
-            -tesseract_cmd = 'tesseract'
-            +tesseract_cmd = '${pkgs.tesseract4}/bin/tesseract'
+              -tesseract_cmd = 'tesseract'
+              +tesseract_cmd = '${pkgs.tesseract4}/bin/tesseract'
 
              numpy_installed = find_loader('numpy') is not None
              if numpy_installed:
