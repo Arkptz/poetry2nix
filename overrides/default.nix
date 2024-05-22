@@ -987,13 +987,14 @@ lib.composeManyExtensions [
           }
         );
 
-        fastapi = prev.fastapi.overridePythonAttrs (old: {
-          # fastapi 0.111 depends on fastapi-cli, which depends on fastapi, resulting in infinite recursion
-          propagatedBuildInputs =
-            removePackagesByName
-              (old.propagatedBuildInputs or [ ])
-              (lib.optionals (final ? fastapi-cli) [ final.fastapi-cli ]);
-        });
+        # fastapi = prev.fastapi.overridePythonAttrs (old: {
+        #   # fastapi 0.111 depends on fastapi-cli, which depends on fastapi, resulting in infinite recursion
+        #   propagatedBuildInputs =
+        #     removePackagesByName
+        #     (old.propagatedBuildInputs or [])
+        #     (lib.optionals (final ? fastapi-cli) [final.fastapi-cli]);
+        # });
+        fastapi = bootstrappingBase.fastapi;
 
         fastecdsa = prev.fastecdsa.overridePythonAttrs (old: {
           buildInputs = old.buildInputs or [ ] ++ [ pkgs.gmp.dev ];
@@ -1243,14 +1244,23 @@ lib.composeManyExtensions [
         httplib2 = prev.httplib2.overridePythonAttrs (old: {
           propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ [ final.pyparsing ];
         });
-
+        humps = prev.humps.overridePythonAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.setuptools ];
+        });
         icecream = prev.icecream.overridePythonAttrs (_old: {
           #  # ERROR: Could not find a version that satisfies the requirement executing>=0.3.1 (from icecream) (from versions: none)
           postPatch = ''
             substituteInPlace setup.py --replace 'executing>=0.3.1' 'executing'
           '';
         });
-
+        idna = bootstrappingBase.idna.overridePythonAttrs (old: {
+          preFixup = ''
+            find $out -name 'RECORD' -delete
+            find  $out -type d -name '__pycache__' -exec rm -r {} +
+            find  $out -name '*.pyc' -delete
+            find  $out -name '*.*.pyc' -delete
+          '';
+        });
         igraph = prev.igraph.overridePythonAttrs (
           old: {
             nativeBuildInputs = [ pkgs.cmake ] ++ old.nativeBuildInputs;
@@ -1362,7 +1372,7 @@ lib.composeManyExtensions [
         jeepney = prev.jeepney.overridePythonAttrs (old: {
           buildInputs = (old.buildInputs or [ ]) ++ [ final.outcome final.trio ];
         });
-
+        jinja2 = bootstrappingBase.jinja2;
         jinja2-ansible-filters = prev.jinja2-ansible-filters.overridePythonAttrs (
           old: {
             preBuild =
@@ -2180,7 +2190,9 @@ lib.composeManyExtensions [
             NIX_CFLAGS_COMPILE = [ "-I${pkgs.openexr.dev}/include/OpenEXR" "-I${pkgs.ilmbase.dev}/include/OpenEXR" ];
           }
         );
-
+        opentele = prev.opentele.overridePythonAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.setuptools ];
+        });
         openvino = prev.openvino.overridePythonAttrs (
           old: {
             buildInputs =
@@ -2929,7 +2941,10 @@ lib.composeManyExtensions [
                 --replace "find_library('snap7')" "\"${pkgs.snap7}/lib/libsnap7.so\""
             '';
         });
-
+        pyproject-pre-commit = prev.pyproject-pre-commit.overridePythonAttrs (old: {
+          buildInputs = (old.buildInputs or [ ]) ++ [ final.poetry ];
+          propagatedBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.mdformat ];
+        });
         pytoml = prev.pytoml.overridePythonAttrs (
           _old: {
             doCheck = false;
@@ -3860,16 +3875,20 @@ lib.composeManyExtensions [
           '';
         });
 
-        sqlmodel = prev.sqlmodel.overridePythonAttrs (old: {
-          patchPhase = builtins.concatStringsSep "\n" [
-            (old.patchPhase or "")
-            # sqlmodel's pyproject.toml lists version = "0" that it changes during a build phase
-            # If this isn't fixed, it gets a vague "ERROR: No matching distribution for sqlmodel..." error
-            ''
-              substituteInPlace "pyproject.toml" --replace 'version = "0"' 'version = "${old.version}"'
-            ''
-          ];
+        # sqlmodel = prev.sqlmodel.overridePythonAttrs (old: {
+        #   patchPhase = builtins.concatStringsSep "\n" [
+        #     (old.patchPhase or "")
+        #     # sqlmodel's pyproject.toml lists version = "0" that it changes during a build phase
+        #     # If this isn't fixed, it gets a vague "ERROR: No matching distribution for sqlmodel..." error
+        #     ''
+        #       substituteInPlace "pyproject.toml" --replace 'version = "0"' 'version = "${old.version}"'
+        #     ''
+        #   ];
+        # });
+        sqlalchemy = bootstrappingBase.sqlalchemy.overridePythonAttrs (_old: {
+          installCheckPhase = "find $out -name 'RECORD' -delete && find $out -type d -name '__pycache__' -exec rm -r {} +";
         });
+        sqlmodel = bootstrappingBase.sqlmodel;
 
         suds = prev.suds.overridePythonAttrs (_old: {
           # Fix naming convention shenanigans.
@@ -3959,7 +3978,9 @@ lib.composeManyExtensions [
             '';
           }
         );
-
+        tgconvertor = prev.tgconvertor.overridePythonAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.setuptools ];
+        });
         tinycss2 = prev.tinycss2.overridePythonAttrs (
           old: {
             buildInputs = (old.buildInputs or [ ]) ++ [ final.pytest-runner ];
@@ -4012,7 +4033,14 @@ lib.composeManyExtensions [
             ];
           pipInstallFlags = [ "--no-deps" ];
         });
-
+        typing-extensions = bootstrappingBase.typing-extensions.overridePythonAttrs (_old: {
+          ipreFixup = ''
+            find $out -name 'RECORD' -delete
+            find  $out -type d -name '__pycache__' -exec rm -r {} +
+            find  $out -name '*.pyc' -delete
+            find  $out -name '*.*.pyc' -delete
+          '';
+        });
         typed_ast = prev.typed-ast.overridePythonAttrs (old: {
           nativeBuildInputs =
             (old.nativeBuildInputs or [ ])
@@ -4478,10 +4506,26 @@ lib.composeManyExtensions [
                 '';
               }
           );
+        flake8-annotations-complexity =
+          prev.flake8-annotations-complexity.overridePythonAttrs
+            (old: { nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ final.setuptools ]; });
+        flake8-builtins =
+          prev.flake8-builtins.overridePythonAttrs
+            (old: { nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ final.setuptools final.hatchling ]; });
+        flake8-executable =
+          prev.flake8-executable.overridePythonAttrs
+            (old: { nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ final.setuptools final.setuptools_scm ]; });
 
         flake8-mutable =
           prev.flake8-mutable.overridePythonAttrs
             (old: { buildInputs = old.buildInputs or [ ] ++ [ final.pytest-runner ]; });
+        flake8-rst-docstringse =
+          prev.flake8-rst-docstrings.overridePythonAttrs
+            (old: { nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ final.setuptools ]; });
+
+        flake8-pep3101 =
+          prev.flake8-pep3101.overridePythonAttrs
+            (old: { nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ final.setuptools final.hatchling ]; });
 
         pydantic =
           prev.pydantic.overridePythonAttrs
