@@ -4364,7 +4364,7 @@ lib.composeManyExtensions [
               // lib.optionalAttrs (lib.versionAtLeast old.version "2.0.19" && lib.versionOlder old.version "2.0.20") {
                 sourceRoot = ".";
               });
-
+        uvicorn = bootstrappingBase.uvicorn;
         wcwidth = prev.wcwidth.overridePythonAttrs (old: {
           propagatedBuildInputs =
             (old.propagatedBuildInputs or [ ])
