@@ -3996,9 +3996,7 @@ lib.composeManyExtensions [
             '';
           }
         );
-        tgconvertor = prev.tgconvertor.overridePythonAttrs (old: {
-          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ final.setuptools ];
-        });
+
         tinycss2 = prev.tinycss2.overridePythonAttrs (
           old: {
             buildInputs = (old.buildInputs or [ ]) ++ [ final.pytest-runner ];
