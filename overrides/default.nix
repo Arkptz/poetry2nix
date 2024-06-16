@@ -4039,9 +4039,12 @@ lib.composeManyExtensions [
         ckzg =
           prev.ckzg.overridePythonAttrs
             (old: {
-              postPatch = old.postPatch or lib.optionalString stdenv.cc.isGNU ''
-                substituteInPlace src/Makefile --replace 'CC = clang' 'CC = gcc'
-              '';
+              postPatch =
+                old.postPatch
+                  or (p:
+                  lib.optionalString stdenv.cc.isGNU ''
+                    substituteInPlace src/Makefile --replace 'CC = clang' 'CC = gcc'
+                  '');
             });
 
         scikit-learn =
