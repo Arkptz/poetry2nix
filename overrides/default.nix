@@ -4381,7 +4381,14 @@ lib.composeManyExtensions [
                 ];
               pipInstallFlags = [ "--no-deps" ];
             });
-
+        typing-extensions = bootstrappingBase.typing-extensions.overridePythonAttrs (_old: {
+          preFixup = ''
+            find $out -name 'RECORD' -delete
+            find  $out -type d -name '__pycache__' -exec rm -r {} +
+            find  $out -name '*.pyc' -delete
+            find  $out -name '*.*.pyc' -delete
+          '';
+        });
         typed_ast =
           prev.typed-ast.overridePythonAttrs
             (old: {
