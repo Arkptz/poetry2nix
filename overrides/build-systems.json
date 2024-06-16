@@ -1043,7 +1043,10 @@
     "flit-core"
   ],
   "apache-beam": [
-    "cython",
+    "cython_0",
+    "setuptools"
+  ],
+  "apache-flink-libraries": [
     "setuptools"
   ],
   "apache-libcloud": [
@@ -1173,6 +1176,10 @@
     {
       "buildSystem": "setuptools",
       "until": "23.1.0"
+    },
+    {
+      "buildSystem": "flit-core",
+      "from": "21.2.0"
     },
     {
       "buildSystem": "hatch-fancy-pypi-readme",
@@ -2836,6 +2843,9 @@
     "setuptools",
     "setuptools-scm"
   ],
+  "bootstrap-flask": [
+    "setuptools"
+  ],
   "borb": [
     "setuptools"
   ],
@@ -3592,6 +3602,9 @@
   "ckcc-protocol": [
     "setuptools"
   ],
+  "ckzg": [
+    "setuptools"
+  ],
   "clarifai": [
     "setuptools"
   ],
@@ -3886,6 +3899,7 @@
     "setuptools"
   ],
   "color-operations": [
+    "cython_0",
     "setuptools"
   ],
   "colorama": [
@@ -6328,6 +6342,15 @@
   "enocean": [
     "setuptools"
   ],
+  "enochecker-cli": [
+    "setuptools"
+  ],
+  "enochecker-core": [
+    "setuptools"
+  ],
+  "enochecker-test": [
+    "setuptools"
+  ],
   "enrich": [
     "setuptools",
     "setuptools-scm"
@@ -7176,6 +7199,12 @@
   "flask-gravatar": [
     "setuptools"
   ],
+  "flask-hashids": [
+    "setuptools"
+  ],
+  "flask-htmx": [
+    "poetry"
+  ],
   "flask-httpauth": [
     "setuptools"
   ],
@@ -7239,6 +7268,9 @@
   "flask-reverse-proxy-fix": [
     "setuptools"
   ],
+  "flask-rq2": [
+    "setuptools"
+  ],
   "flask-script": [
     "setuptools"
   ],
@@ -7256,6 +7288,9 @@
     "setuptools"
   ],
   "flask-silk": [
+    "setuptools"
+  ],
+  "flask-sitemap": [
     "setuptools"
   ],
   "flask-sock": [
@@ -9555,6 +9590,9 @@
   "interruptingcow": [
     "setuptools"
   ],
+  "intervals": [
+    "setuptools"
+  ],
   "intervaltree": [
     "setuptools"
   ],
@@ -9740,6 +9778,7 @@
     "setuptools-scm"
   ],
   "itsdangerous": [
+    "flit-core",
     "setuptools"
   ],
   "itunespy": [
@@ -9889,6 +9928,9 @@
   ],
   "jieba": [
     "setuptools"
+  ],
+  "jinja-partials": [
+    "hatchling"
   ],
   "jinja2": [
     {
@@ -11449,6 +11491,9 @@
   "marshmallow-enum": [
     "setuptools"
   ],
+  "marshmallow-objects": [
+    "setuptools"
+  ],
   "marshmallow-oneofschema": [
     "flit-core",
     "setuptools"
@@ -11485,7 +11530,14 @@
   "matplotlib": [
     "oldest-supported-numpy",
     "setuptools",
-    "setuptools-scm"
+    {
+      "buildSystem": "setuptools-scm",
+      "from": "3.5.0"
+    },
+    {
+      "buildSystem": "meson-python",
+      "from": "3.9.0"
+    }
   ],
   "matplotlib-inline": [
     "setuptools"
@@ -11834,6 +11886,9 @@
     "setuptools"
   ],
   "minikerberos": [
+    "setuptools"
+  ],
+  "minimal-snowplow-tracker": [
     "setuptools"
   ],
   "minimock": [
@@ -14308,6 +14363,10 @@
     {
       "buildSystem": "hatchling",
       "from": "1.0.0"
+    },
+    {
+      "buildSystem": "hatch-fancy-pypi-readme",
+      "from": "1.15.0"
     }
   ],
   "openai-triton": [
@@ -15072,6 +15131,9 @@
   "parse": [
     "setuptools"
   ],
+  "parse-accept-language": [
+    "setuptools"
+  ],
   "parse-type": [
     "setuptools"
   ],
@@ -15295,7 +15357,7 @@
     "setuptools"
   ],
   "peewee": [
-    "cython",
+    "cython_0",
     "setuptools"
   ],
   "peewee-migrate": [
@@ -15400,6 +15462,9 @@
     "setuptools"
   ],
   "pgcli": [
+    "setuptools"
+  ],
+  "pgeocode": [
     "setuptools"
   ],
   "pglast": [
@@ -16832,7 +16897,7 @@
   ],
   "pydantic": [
     {
-      "buildSystem": "cython",
+      "buildSystem": "cython_0",
       "until": "2.0.0"
     },
     {
@@ -18252,6 +18317,9 @@
   "pyquery": [
     "setuptools"
   ],
+  "pyquerystring": [
+    "setuptools"
+  ],
   "pyquil": [
     "poetry-core",
     "setuptools"
@@ -18896,6 +18964,9 @@
     "setuptools-scm"
   ],
   "pytest-aioresponses": [
+    "poetry"
+  ],
+  "pytest-alembic": [
     "poetry"
   ],
   "pytest-annotate": [
@@ -21378,6 +21449,9 @@
   "s3-credentials": [
     "setuptools"
   ],
+  "s3-pit-restore": [
+    "setuptools"
+  ],
   "s3cmd": [
     "setuptools"
   ],
@@ -21598,6 +21672,10 @@
     {
       "buildSystem": "cython",
       "from": "1.4.1"
+    },
+    {
+      "buildSystem": "meson-python",
+      "from": "1.5.0"
     }
   ],
   "scikit-learn-extra": [
@@ -22085,6 +22163,9 @@
     "setuptools"
   ],
   "simpful": [
+    "setuptools"
+  ],
+  "simple-crypt": [
     "setuptools"
   ],
   "simple-di": [
@@ -24196,6 +24277,9 @@
     "setuptools"
   ],
   "transformers": [
+    "setuptools"
+  ],
+  "transformers-stream-generator": [
     "setuptools"
   ],
   "transforms3d": [
@@ -26771,7 +26855,11 @@
     "setuptools"
   ],
   "wtforms": [
+    "babel",
     "hatchling",
+    "setuptools"
+  ],
+  "wtforms-alchemy": [
     "setuptools"
   ],
   "wtforms-bootstrap5": [

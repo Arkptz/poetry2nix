@@ -58,12 +58,14 @@ in
   blinker-1_6_2 = callTest ./blinker-1_6_2 { };
   blinker = callTest ./blinker { };
   bcrypt = callTest ./bcrypt { };
+  color-operations = callTest ./color-operations { };
   mk-poetry-packages = callTest ./mk-poetry-packages { };
   mailchimp3 = callTest ./mailchimp3 { };
   markupsafe2 = callTest ./markupsafe2 { };
   mysqlclient = callTest ./mysqlclient { };
   jq = callTest ./jq { };
   ubersmith = callTest ./ubersmith { };
+  use-url-src = callTest ./use-url-src { };
   use-url-wheel = callTest ./use-url-wheel { };
   returns = callTest ./returns { };
   option = callTest ./option { };
@@ -128,7 +130,8 @@ in
   missing-iswheel = callTest ./missing-iswheel { };
   wheel-wheel = callTest ./wheel-wheel { };
   fancycompleter-wheel = callTest ./fancycompleter-wheel { };
-  matplotlib-post-3-7 = callTest ./matplotlib-post-3-7 { };
+  matplotlib-3-7 = callTest ./matplotlib-3-7 { };
+  matplotlib-3-9 = callTest ./matplotlib-3-9 { };
   rfc3986-validator = callTest ./rfc3986-validator { };
   virtualenv-pre-20-18 = callTest ./virtualenv-pre-20-18 { };
   virtualenv-post-20-18 = callTest ./virtualenv-post-20-18 { };
@@ -146,6 +149,7 @@ in
   plyvel = callTest ./plyvel { };
   awsume = callTest ./awsume { };
   gobject-introspection = callTest ./gobject-introspection { };
+  pydantic-1 = callTest ./pydantic-1 { };
   python-versions-or = callTest ./python-versions-or { };
   python-markers = callTest ./python-markers { };
   orjson-test = callTest ./orjson-test { };
@@ -161,6 +165,11 @@ in
   pandas = callTest ./pandas { };
   python-magic = callTest ./python-magic { };
   cmdstanpy = callTest ./cmdstanpy { };
+  avro-python3 = callTest ./avro-python3 { };
+  mpi4py-test = callTest ./mpi4py-test { };
+  ckzg = callTest ./ckzg { };
+  thrift = callTest ./thrift { };
+  scikit-learn = callTest ./scikit-learn { };
 } // lib.optionalAttrs (!stdenv.isDarwin) {
   # Editable tests fails on Darwin because of sandbox paths
   pep600 = callTest ./pep600 { };
@@ -168,7 +177,6 @@ in
 
   # Fails because of missing inputs on darwin
   text-generation-webui = callTest ./text-generation-webui { };
-  vllm-wheel = callTest ./vllm-wheel { };
 
   # Cross tests fail on darwin for some strange reason:
   # ERROR: MarkupSafe-2.0.1-cp39-cp39-linux_aarch64.whl is not a supported wheel on this platform.
@@ -180,7 +188,7 @@ in
   # linux-only API (AIO)
   aiopath = callTest ./aiopath { };
   # doesn't compile on darwin
-  matplotlib-pre-3-7 = callTest ./matplotlib-pre-3-7 { };
+  matplotlib-3-6 = callTest ./matplotlib-3-6 { };
   # the version of scipy used here doesn't build from source on darwin
   scipy1_9 = callTest ./scipy1_9 { };
 } // lib.optionalAttrs (!stdenv.isAarch64) {
@@ -193,9 +201,11 @@ in
   pyarrow-wheel = callTest ./pyarrow-wheel { };
   fiona-wheel = callTest ./fiona-wheel { };
   ml-stack = callTest ./ml-stack { };
+  flink = callTest ./flink { };
 } // lib.optionalAttrs (stdenv.isLinux && stdenv.isx86_64) {
   # x86_64-linux
   pyqt6 = callTest ./pyqt6 { };
+  vllm-wheel = callTest ./vllm-wheel { };
 } // lib.optionalAttrs (!(stdenv.isLinux && stdenv.isAarch64)) {
   # x86_64-linux
   # {x86_64,aarch64}-darwin

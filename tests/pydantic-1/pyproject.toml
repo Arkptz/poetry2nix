@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "test-ruff"
+name = "pydantic-1-test"
 version = "0.1.0"
-description = "Test of the ruff package"
-authors = ["Your Name <you@example.com>"]
+description = ""
+authors = ["You <me@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-ruff = "0.4.4"
+python = ">=3.7"
+pydantic = "^1.0.0"
 
 [build-system]
 requires = ["poetry-core"]

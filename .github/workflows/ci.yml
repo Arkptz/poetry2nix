@@ -8,8 +8,8 @@ on:
       - "master"
 
 concurrency:
-  group: ${{ github.repository }}-${{ github.head_ref || github.sha }}-${{ github.workflow }}
-  cancel-in-progress: true
+  group: ${{ github.repository }}-${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
   nix-matrix:
@@ -18,7 +18,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v26
+      - uses: cachix/install-nix-action@v27
       - id: set-matrix
         name: Generate Nix Matrix
         run: |
@@ -36,11 +36,11 @@ jobs:
       matrix: ${{ fromJSON(needs.nix-matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v26
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/install-nix-action@v27
+      - uses: cachix/cachix-action@v15
         with:
           name: poetry2nix
-          signingKey: "VhaWuN3IyJVpWg+aZvTocVB+W8ziZKKRGLKR53Pkld3YRZxYOUfXZf0fvqF+LkqVW0eA60trVd5vsqNONpX9Hw=="
+          authToken: ${{ secrets.POETRY2NIX_CACHIX_AUTH_TOKEN }}
       - run: nix build -L ".#${{ matrix.attr }}" --keep-going
 
   nix-build-shell:
@@ -50,14 +50,15 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+          - macos-13
+          - macos-14
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v26
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/install-nix-action@v27
+      - uses: cachix/cachix-action@v15
         with:
           name: poetry2nix
-          signingKey: "VhaWuN3IyJVpWg+aZvTocVB+W8ziZKKRGLKR53Pkld3YRZxYOUfXZf0fvqF+LkqVW0eA60trVd5vsqNONpX9Hw=="
+          authToken: ${{ secrets.POETRY2NIX_CACHIX_AUTH_TOKEN }}
       - name: compute system from nixpkgs
         run: |
           echo "NIXPKGS_SYSTEM=$(nix eval --raw 'nixpkgs#system')" >> "$GITHUB_ENV"
@@ -72,14 +73,15 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+          - macos-13
+          - macos-14
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v26
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/install-nix-action@v27
+      - uses: cachix/cachix-action@v15
         with:
           name: poetry2nix
-          signingKey: "VhaWuN3IyJVpWg+aZvTocVB+W8ziZKKRGLKR53Pkld3YRZxYOUfXZf0fvqF+LkqVW0eA60trVd5vsqNONpX9Hw=="
+          authToken: ${{ secrets.POETRY2NIX_CACHIX_AUTH_TOKEN }}
       - run: nix flake show --all-systems
 
   test-template:
@@ -89,14 +91,15 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+          - macos-13
+          - macos-14
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v26
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/install-nix-action@v27
+      - uses: cachix/cachix-action@v15
         with:
           name: poetry2nix
-          signingKey: "VhaWuN3IyJVpWg+aZvTocVB+W8ziZKKRGLKR53Pkld3YRZxYOUfXZf0fvqF+LkqVW0eA60trVd5vsqNONpX9Hw=="
+          authToken: ${{ secrets.POETRY2NIX_CACHIX_AUTH_TOKEN }}
 
       - name: create flake template test directory
         run: echo "TESTDIR=$(mktemp -d)" >> "$GITHUB_ENV"
@@ -139,14 +142,14 @@ jobs:
     needs: collect
     name: "Release"
     runs-on: "ubuntu-latest"
-    concurrency:
-      group: ${{ github.repository }}-${{ github.workflow }}
-      cancel-in-progress: false
+    permissions:
+      contents: write
+      pull-requests: read
     steps:
       - uses: actions/checkout@v4
       - name: "Generate tag"
         id: tag
-        run: echo tag=$(./tools/auto_version.py) >> "$GITHUB_OUTPUT"
+        run: echo "tag=$(./tools/auto_version.py)" >> "$GITHUB_OUTPUT"
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"

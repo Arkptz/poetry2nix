@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "test-ruff"
+name = "flink-test"
 version = "0.1.0"
-description = "Test of the ruff package"
-authors = ["Your Name <you@example.com>"]
+description = ""
+authors = ["You <me@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-ruff = "0.4.4"
+apache-flink = "^1.19.0"
 
 [build-system]
 requires = ["poetry-core"]
