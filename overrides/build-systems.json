@@ -9159,6 +9159,9 @@
   "huisbaasje-client": [
     "setuptools"
   ],
+  "graphene-file-upload": [
+    "setuptools"
+  ],
   "sqlparams": [
     "setuptools"
   ],
