@@ -9160,7 +9160,8 @@
     "setuptools"
   ],
   "human-id": [
-    "poetry-core"
+    "poetry-core",
+    "setuptools"
   ],
   "human-readable": [
     "hatch-vcs",
