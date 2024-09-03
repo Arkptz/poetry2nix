@@ -4505,6 +4505,9 @@
     "cython",
     "setuptools"
   ],
+  "cz-conventional-gitmoji": [
+    "poetry"
+  ],
   "d20": [
     "setuptools"
   ],
