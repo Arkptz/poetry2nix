@@ -17807,6 +17807,9 @@
   "pylightning": [
     "setuptools"
   ],
+  "pylightxl": [
+    "setuptools"
+  ],
   "pylink-square": [
     "setuptools"
   ],
