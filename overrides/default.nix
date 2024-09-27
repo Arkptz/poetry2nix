@@ -1898,7 +1898,7 @@ in
                 {}
                 {
                   mpi = {
-                    mpicc = "${pkgs.mpi.dev}/bin/mpicc";
+                    mpicc = "${lib.getDev pkgs.mpi}/bin/mpicc";
                   };
                 };
             };
@@ -2562,6 +2562,38 @@ in
             nativeBuildInputs = old.nativeBuildInputs or [] ++ [pkgs.postgresql];
           }
         );
+
+        pemja = prev.pemja.overridePythonAttrs (old: {
+          buildInputs = old.buildInputs or [] ++ [pkgs.openjdk17_headless];
+        });
+
+        pycrdt = let
+          hashes = {
+            "0.9.11" = "sha256-qKrYCkSP8f/oQytfc1xvBX6gt26D3Z/5bbzKPO0e0tQ=";
+          };
+        in
+          prev.pycrdt.overridePythonAttrs (old: {
+            cargoDeps = pkgs.rustPlatform.fetchCargoTarball {
+              inherit (old) src;
+              name = "${old.pname}-${old.version}";
+              sha256 = hashes.${old.version};
+            };
+
+            buildInputs =
+              old.buildInputs
+              or []
+              ++ lib.optionals stdenv.isDarwin [
+                pkgs.libiconv
+              ];
+
+            nativeBuildInputs =
+              old.nativeBuildInputs
+              or []
+              ++ [
+                pkgs.rustPlatform.cargoSetupHook
+                pkgs.rustPlatform.maturinBuildHook
+              ];
+          });
 
         pycurl = prev.pycurl.overridePythonAttrs (
           old: {

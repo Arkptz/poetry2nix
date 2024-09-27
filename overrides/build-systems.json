@@ -1055,6 +1055,9 @@
     "cython_0",
     "setuptools"
   ],
+  "apache-flink": [
+    "setuptools"
+  ],
   "apache-flink-libraries": [
     "setuptools"
   ],
@@ -5872,6 +5875,7 @@
     "setuptools"
   ],
   "docopt-ng": [
+    "pdm-backend",
     "setuptools"
   ],
   "docplex": [
@@ -15491,6 +15495,9 @@
     "hatchling",
     "setuptools"
   ],
+  "pemja": [
+    "setuptools"
+  ],
   "pencompy": [
     "setuptools"
   ],
@@ -24038,6 +24045,9 @@
   "textual-fastdatatable": [
     "poetry-core",
     "setuptools"
+  ],
+  "textual-serve": [
+    "hatchling"
   ],
   "textual-textarea": [
     "poetry-core",
