@@ -761,13 +761,13 @@ in
           old: {
             propagatedBuildInputs =
               removePackagesByName
-              (old.propagatedBuildInputs or [])
+              old.propagatedBuildInputs or []
               (
                 # dask[dataframe] depends on dask-expr, which depends on dask, resulting in infinite recursion
-                (lib.optionals (final ? dask-expr) [final.dask-expr])
+                lib.optionals (final ? dask-expr) [final.dask-expr]
                 ++
                 # dask[dataframe] depends on distributed, which depends on dask, resulting in infinite recursion
-                (lib.optionals (final ? distributed) [final.distributed])
+                lib.optionals (final ? distributed) [final.distributed]
               );
           }
         );
