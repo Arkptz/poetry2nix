@@ -2514,6 +2514,12 @@ in
           }
         );
 
+        pillow-avif-plugin = prev.pillow-avif-plugin.overridePythonAttrs (
+          old: {
+            buildInputs = old.buildInputs or [] ++ [pkgs.libavif];
+          }
+        );
+
         pillow-heif = prev.pillow-heif.overridePythonAttrs (
           old: {
             nativeBuildInputs = old.nativeBuildInputs or [] ++ [pkg-config];
