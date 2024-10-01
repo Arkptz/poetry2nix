@@ -4744,6 +4744,8 @@ in
               setuptools
               numpy
               six
+              attrdict
+              sip
             ]);
         in {
           DOXYGEN = "${pkgs.doxygen}/bin/doxygen";
