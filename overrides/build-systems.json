@@ -26708,6 +26708,9 @@
   "vonage-jwt": [
     "setuptools"
   ],
+  "vonage-utils": [
+    "setuptools"
+  ],
   "vowpalwabbit": [
     "setuptools"
   ],
