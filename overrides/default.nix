@@ -4202,6 +4202,7 @@ in
         temporalio = let
           getCargoHash = version:
             {
+              "1.8.0" = "sha256-1i2iyu/XyOk041abBHsZ9T/LDqaNzoook/iRl7cf6Lw=";
               "1.7.1" = "sha256-A3/U73EXE7ZWuxYbWWvJPPLqEZjUG7i+p9Ub7SSjlNk=";
             }
             .${version}
