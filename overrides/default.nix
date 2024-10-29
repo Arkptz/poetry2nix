@@ -3190,16 +3190,12 @@ in
           );
 
         pyqt6 = let
-          # The build from source fails unless the pyqt6 version agrees
-          # with the version of qt6 from nixpkgs. Thus, we prefer using
-          # the wheel here.
-          pyqt6-wheel = prev.pyqt6.override {preferWheel = true;};
-          pyqt6 = pyqt6-wheel.overridePythonAttrs (old: let
+          pyqt6 = prev.pyqt6.overridePythonAttrs (old: let
             confirm-license = pkgs.writeText "confirm-license.patch" ''
-              diff --git a/project.py b/project.py
-              --- a/project.py
-              +++ b/project.py
-              @@ -163,8 +163,7 @@
+                diff --git a/project.py b/project.py
+                --- a/project.py
+                +++ b/project.py
+                @@ -163,8 +163,7 @@
 
                        # Automatically confirm the license if there might not be a command
                        # line option to do so.
