@@ -985,7 +985,7 @@ in
         };
 
         # FIXME: this is a workaround for https://github.com/nix-community/poetry2nix/issues/1161
-        eth-utils = prev.eth-utils.override {preferWheel = true;};
+        eth-utils = prev.eth-utils.overridePythonAttrs {preferWheel = true;};
 
         evdev = prev.evdev.overridePythonAttrs (_old: {
           preConfigure = ''
